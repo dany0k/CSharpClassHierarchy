@@ -42,7 +42,7 @@ public:
 
     void addClassToNamespace(const std::string& className, const std::string& namespaceName);
 
-    void addParents(CSharpClass currClass, std::string parentClassName);
+    void addParents(CSharpClass& currClass, std::string parentClassName);
 
     std::string namespacesToString();
 

@@ -79,7 +79,7 @@ void CSharpHierarchy::addClassToNamespace(const std::string& className, const st
     cSharpNamespace.addClass(cSharpClass);
 }
 
-void CSharpHierarchy::addParents(CSharpClass currClass, std::string parentClassName) {
+void CSharpHierarchy::addParents(CSharpClass& currClass, std::string parentClassName) {
     for (CSharpClass cls : cSharpClasses) {
         if (cls.getClassName() == parentClassName) {
             currClass.setParentClass(cls);
