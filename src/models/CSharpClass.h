@@ -8,7 +8,6 @@
 #include <vector>
 #include <string>
 
-#include "CSharpNamespace.h"
 #include "CSharpMethod.h"
 #include "CSharpField.h"
 
@@ -21,7 +20,6 @@ enum class TYPE {
 class CSharpClass {
 private:
     std::string csharpClassName;
-    CSharpNamespace csharpClassNamespace;
     std::vector<CSharpField> fields;
     std::vector<CSharpMethod> methods;
     std::vector<CSharpClass> parentClasses;
@@ -31,13 +29,16 @@ public:
     CSharpClass();
 
     CSharpClass(std::string csharpClassName,
-                CSharpNamespace csharpClassNamespace,
                 TYPE type);
 
     CSharpClass(std::string csharpClassName,
-                CSharpNamespace csharpClassNamespace,
                 TYPE type,
                 const std::vector<CSharpClass>& parentClasses);
+
+    CSharpClass(std::string  csharpClassName,
+                             std::vector<CSharpField> fields,
+                             std::vector<CSharpMethod> methods,
+                             TYPE type);
 
     std::string toString() const;
 
@@ -45,9 +46,8 @@ public:
 
     void setParentClasses(std::vector<CSharpClass> parentClasses);
 
-    void setParentClass(CSharpClass parentClass);
+    void setParentClass(CSharpClass& parentClass);
 
-    void setNameSpace(CSharpNamespace csharpClassNamespace);
 
     void setFields(std::vector<CSharpField> fields);
 
@@ -59,7 +59,6 @@ public:
 
     std::string getClassName() const;
 
-    CSharpClass(const char string[17], CSharpNamespace aNamespace, TYPE type);
 };
 
 

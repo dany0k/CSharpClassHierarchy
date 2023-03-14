@@ -1,3 +1,3 @@
-Z:/VSU/CSHarpClassHierarchy/src/cmake-build-debug/CMakeFiles/CSHarpClassHierarchy.dir
-Z:/VSU/CSHarpClassHierarchy/src/cmake-build-debug/CMakeFiles/edit_cache.dir
-Z:/VSU/CSHarpClassHierarchy/src/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+Z:/VSU/3course/CSharpClassHierarchy/src/cmake-build-debug/CMakeFiles/CSHarpClassHierarchy.dir
+Z:/VSU/3course/CSharpClassHierarchy/src/cmake-build-debug/CMakeFiles/edit_cache.dir
+Z:/VSU/3course/CSharpClassHierarchy/src/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -149,8 +149,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "Z:/VSU/CSHarpClassHierarchy/src/cmake-build-debug",
-		"source" : "Z:/VSU/CSHarpClassHierarchy/src"
+		"build" : "Z:/VSU/3course/CSharpClassHierarchy/src/cmake-build-debug",
+		"source" : "Z:/VSU/3course/CSharpClassHierarchy/src"
 	},
 	"version" : 
 	{

@@ -8,17 +8,23 @@
 
 CSharpClass::CSharpClass() = default;
 
-CSharpClass::CSharpClass(const std::string csharpClassName, CSharpNamespace csharpClassNamespace, TYPE type) :
+CSharpClass::CSharpClass(const std::string csharpClassName, TYPE type) :
         csharpClassName(csharpClassName),
-        csharpClassNamespace(std::move(csharpClassNamespace)),
+        csharpClassType(type) { }
+
+CSharpClass::CSharpClass(std::string  csharpClassName,
+                         std::vector<CSharpField> fields,
+                         std::vector<CSharpMethod> methods,
+                         TYPE type) :
+        csharpClassName(std::move(csharpClassName)),
+        fields(std::move(fields)),
+        methods(std::move(methods)),
         csharpClassType(type) { }
 
 CSharpClass::CSharpClass(const std::string csharpClassName,
-                         CSharpNamespace csharpClassNamespace,
                          TYPE type,
                          const std::vector<CSharpClass>& parentClasses) :
         csharpClassName(csharpClassName),
-        csharpClassNamespace(std::move(csharpClassNamespace)),
         csharpClassType(type),
         parentClasses(parentClasses) {
     if (!parentClasses.empty() && type != TYPE::ABSTRACT) {
@@ -28,23 +34,25 @@ CSharpClass::CSharpClass(const std::string csharpClassName,
 
 std::string CSharpClass::toString() const {
     std::string res;
-    res.append("CSharpClassName: " + csharpClassName + "\n");
+    res.append("Class: " + csharpClassName + "\n");
     for (const CSharpClass &cls: parentClasses) {
         res.append("Parent class: " + cls.csharpClassName + "\n");
     }
-    res.append("CSharpClassType: ");
+    res.append("Type: ");
     if (csharpClassType == TYPE::ABSTRACT) {
         res.append("abstract\n");
     } else {
         res.append("common\n");
     }
-    res.append("CSharpNamespace: " + csharpClassNamespace.getName() + "\n");
+    res.append("Fields: {\n");
     for (CSharpField fld: fields) {
-        res.append("CSharpField: " + fld.getField() + "\n");
+        res.append("\t" + fld.getField() + "\n");
     }
+    res.append("}\nMethods: {\n");
     for (CSharpMethod mtd: methods) {
-        res.append("CSharpMethod: " + mtd.get_method() + "\n");
+        res.append("\t" + mtd.get_method() + "\n");
     }
+    res.append("}\n");
     return res;
 }
 
@@ -66,15 +74,11 @@ void CSharpClass::setParentClasses(const std::vector<CSharpClass> parentClasses)
     CSharpClass::parentClasses = parentClasses;
 }
 
-void CSharpClass::setParentClass(CSharpClass parentClass) {
+void CSharpClass::setParentClass(CSharpClass& parentClass) {
     this->parentClasses.emplace_back(parentClass);
     if (csharpClassType != TYPE::ABSTRACT) {
         implementMethods();
     }
-}
-
-void CSharpClass::setNameSpace(const CSharpNamespace nameSpace) {
-    CSharpClass::csharpClassNamespace = nameSpace;
 }
 
 void CSharpClass::setFields(const std::vector<CSharpField> fields) {
@@ -92,5 +96,3 @@ void CSharpClass::setType(TYPE type) {
 std::string CSharpClass::getClassName() const {
     return csharpClassName;
 }
-
-

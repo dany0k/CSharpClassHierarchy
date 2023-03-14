@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "z:/VSU/CSHarpClassHierarchy/src/cmake-build-debug"
+			"value" : "z:/VSU/3course/CSharpClassHierarchy/src/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -575,7 +575,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Z:/VSU/CSHarpClassHierarchy/src/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "Z:/VSU/3course/CSharpClassHierarchy/src/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -647,7 +647,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "Z:/VSU/CSHarpClassHierarchy/src"
+			"value" : "Z:/VSU/3course/CSharpClassHierarchy/src"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1263,7 +1263,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Z:/VSU/CSHarpClassHierarchy/src/cmake-build-debug"
+			"value" : "Z:/VSU/3course/CSharpClassHierarchy/src/cmake-build-debug"
 		},
 		{
 			"name" : "CSHarpClassHierarchy_IS_TOP_LEVEL",
@@ -1287,7 +1287,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Z:/VSU/CSHarpClassHierarchy/src"
+			"value" : "Z:/VSU/3course/CSharpClassHierarchy/src"
 		},
 		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",
