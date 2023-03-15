@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <exception>
 
 #include "CSharpHierarchy.h"
 
@@ -130,60 +131,145 @@ CSharpClass inputParents(const std::vector<CSharpClass> classes) {
     return parentClass;
 }
 
-void userInput(CSharpHierarchy& cSharpHierarchy) {
+int menu() {
     int userChoice;
+    std::cout << "Choose action:\n"
+                 "1 - Create namespace\n"
+                 "2 - Create new class\n"
+                 "3 - Update class\n"
+                 "4 - Update namespace\n"
+                 "5 - Delete class\n"
+                 "6 - Delete namespace\n"
+                 "7 - Show all classes\n"
+                 "8 - Show all namespaces with its classes" << std::endl;
+    std::cin >> userChoice;
+    return userChoice;
+}
+
+void createClass(CSharpHierarchy& cSharpHierarchy) {
+    // CSharpClass fields
+    std::string className;
+    std::string field;
+    std::string method;
+    // Future class that will be filled by user
+    std::cout << "Input class name" << std::endl;
+    std::cin >> className;
+    TYPE type = inputType();
+    std::vector<CSharpField> fields = inputClassFields();
+    std::vector<CSharpMethod> methods = inputClassMethods();
+    cSharpHierarchy.createClass(className, fields, methods, type);
+    CSharpClass parent = inputParents(cSharpHierarchy.getClasses());
+    cSharpHierarchy.addParents(cSharpHierarchy.getClassByName(className), parent.getClassName());
+    if (cSharpHierarchy.getNamespaces().size() >= 1) {
+        std::cout << "Would you like to add this class to namespace? y/n" << std::endl;
+        std::string namespaceName;
+        std::cin >> namespaceName;
+        if (namespaceName == "y") {
+            while (true) {
+                std::cout << "Input namespace name or type \"stop\" for cancel """ << std::endl;
+                std::cin >> namespaceName;
+                if (namespaceName == "stop") {
+                    break;
+                }
+                cSharpHierarchy.addClassToNamespace(className, namespaceName);
+                break;
+            }
+        }
+    }
+    std::cout << "Class created!" << std::endl;
+}
+
+void createNamespace(CSharpHierarchy& cSharpHierarchy) {
+    std::string namespaceName;
+    std::cout << "Input namespace name" << std::endl;
+    std::cin >> namespaceName;
+    cSharpHierarchy.createNamespace(namespaceName);
+    std::cout << "Completed!" << std::endl;
+}
+
+void updateClass(CSharpHierarchy &cSharpHierarchy) {
+    std::string className;
+    std::string newClassName;
+    CSharpField field;
+    CSharpMethod method;
+    std::cout << "Input classname" << std::endl;
+    std::cin >> className;
+    std::cout << "Input new classname" << std::endl;
+    std::cin >> newClassName;
+    std::vector<CSharpField> fields = inputClassFields();
+    std::vector<CSharpMethod> methods = inputClassMethods();
+    std::cout << "Input parent" << std::endl;
+    CSharpClass parent = inputParents(cSharpHierarchy.getClasses());
+    cSharpHierarchy.addParents(cSharpHierarchy.getClassByName(className), parent.getClassName());
+    try {
+        cSharpHierarchy.updateClassByName(className, newClassName, fields, methods, parent);
+    } catch (std::exception e) {
+        std::cout << "No such class" << std::endl;
+    }
+}
+
+void updateNamespace(CSharpHierarchy &cSharpHierarchy) {
+    std::string namespaceName;
+    std::string newNamespaceName;
+    std::cout << "Input namespace name" << std::endl;
+    std::cin >> namespaceName;
+    std::cout << "Input namespace name" << std::endl;
+    std::cin >> newNamespaceName;
+    try {
+        cSharpHierarchy.updateNamespaceByName(namespaceName, newNamespaceName);
+    } catch (std::exception e) {
+        std::cout << "No such namespace" << std::endl;
+    }
+}
+
+void deleteClass(CSharpHierarchy &cSharpHierarchy) {
+    std::string className;
+    std::cout << "Input class name" << std::endl;
+    std::cin >> className;
+    try {
+        cSharpHierarchy.deleteClassByName(className);
+    } catch(const std::exception e) {
+        std::cout << "No such class" << std::endl;
+    }
+}
+
+void deleteNamespace(CSharpHierarchy &cSharpHierarchy) {
+    std::string namespaceName;
+    std::cout << "Input naspaceName name" << std::endl;
+    std::cin >> namespaceName;
+    try {
+        cSharpHierarchy.deleteNamespaceByName(namespaceName);
+    } catch(const std::exception e) {
+        std::cout << "No such namespace" << std::endl;
+    }
+}
+
+void userInput(CSharpHierarchy& cSharpHierarchy) {
     while (true) {
-        std::cout << "Choose action:\n"
-                     "1 - Create namespace\n"
-                     "2 - Create new class\n"
-                     "3 - Update class\n"
-                     "4 - Update namespace\n"
-                     "5 - Delete class\n"
-                     "6 - Delete namespace\n"
-                     "7 - Show all classes\n"
-                     "8 - Show all namespaces with its classes" << std::endl;
-        std::cin >> userChoice;
+        int userChoice = menu();
         switch (userChoice) {
             case 1: {
-                std::string namespaceName;
-                std::cout << "Input namespace name" << std::endl;
-                std::cin >> namespaceName;
-                cSharpHierarchy.createNamespace(namespaceName);
-                std::cout << "Completed!" << std::endl;
+                createNamespace(cSharpHierarchy);
                 break;
             }
             case 2: {
-                // CSharpClass fields
-                std::string className;
-                std::string field;
-                std::string method;
-                // Future class that will be filled by user
-                std::cout << "Input class name" << std::endl;
-                std::cin >> className;
-                TYPE type = inputType();
-                std::vector<CSharpField> fields = inputClassFields();
-                std::vector<CSharpMethod> methods = inputClassMethods();
-                cSharpHierarchy.createClass(className, fields, methods, type);
-                CSharpClass parent = inputParents(cSharpHierarchy.getClasses());
-                cSharpHierarchy.addParents(cSharpHierarchy.getClassByName(className), parent.getClassName());
-                if (cSharpHierarchy.getNamespaces().size() > 1) {
-                    std::cout << "Would you like to add this class to namespace? y/n" << std::endl;
-                    std::string namespaceName;
-                    std::cin >> namespaceName;
-                    if (namespaceName == "y") {
-                        while (true) {
-                            std::cout << "Input namespace name or type \"stop\" for cancel """ << std::endl;
-                            std::cin >> namespaceName;
-                            if (namespaceName == "stop") {
-                                break;
-                            }
-                            cSharpHierarchy.addClassToNamespace(className, namespaceName);
-                        }
-                        break;
-                    }
-                }
-
-                std::cout << "Class created!" << std::endl;
+                createClass(cSharpHierarchy);
+                break;
+            }
+            case 3: {
+                updateClass(cSharpHierarchy);
+                break;
+            }
+            case 4: {
+                updateNamespace(cSharpHierarchy);
+                break;
+            }
+            case 5: {
+                deleteClass(cSharpHierarchy);
+                break;
+            }
+            case 6: {
+                deleteNamespace(cSharpHierarchy);
                 break;
             }
             case 7: {
