@@ -22,6 +22,10 @@ public:
 
     void addClass(CSharpClass childClass);
 
+    std::vector<CSharpClass>& getClasses();
+
+    void setName(std::string namespaceName);
+
     std::string toString() {
         std::string res;
         res.append(name + ": [\n");

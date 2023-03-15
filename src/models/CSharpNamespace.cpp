@@ -2,6 +2,8 @@
 // Created by Den on 13.03.2023.
 //
 
+#include <exception>
+#include <utility>
 #include "CSharpNamespace.h"
 
 CSharpNamespace::CSharpNamespace() = default;
@@ -19,3 +21,12 @@ CSharpNamespace::CSharpNamespace(std::string name, CSharpClass childClass) :
 void CSharpNamespace::addClass(CSharpClass childClass) {
     this->classes.push_back(childClass);
 }
+
+std::vector<CSharpClass>& CSharpNamespace::getClasses() {
+    return classes;
+}
+
+void CSharpNamespace::setName(std::string namespaceName) {
+    this->name = std::move(namespaceName);
+}
+
