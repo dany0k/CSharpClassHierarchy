@@ -111,7 +111,7 @@ std::vector<CSharpMethod> inputClassMethods() {
 CSharpClass inputParents(const std::vector<CSharpClass> classes) {
     CSharpClass parentClass;
     char userChoice;
-    if (!classes.empty()) {
+    if (classes.size() > 1) {
         std::cout << "Has parent class? y/n";
         std::cin >> userChoice;
         if (userChoice == 'y') {
@@ -136,8 +136,12 @@ void userInput(CSharpHierarchy& cSharpHierarchy) {
         std::cout << "Choose action:\n"
                      "1 - Create namespace\n"
                      "2 - Create new class\n"
-                     "3 - Show classes\n"
-                     "4 - Show all namespaces with its classes" << std::endl;
+                     "3 - Update class\n"
+                     "4 - Update namespace\n"
+                     "5 - Delete class\n"
+                     "6 - Delete namespace\n"
+                     "7 - Show all classes\n"
+                     "8 - Show all namespaces with its classes" << std::endl;
         std::cin >> userChoice;
         switch (userChoice) {
             case 1: {
@@ -162,28 +166,31 @@ void userInput(CSharpHierarchy& cSharpHierarchy) {
                 cSharpHierarchy.createClass(className, fields, methods, type);
                 CSharpClass parent = inputParents(cSharpHierarchy.getClasses());
                 cSharpHierarchy.addParents(cSharpHierarchy.getClassByName(className), parent.getClassName());
-                std::cout << "Would you like to add this class to namespace? y/n" << std::endl;
-                std::string namespaceName;
-                std::cin >> namespaceName;
-                if (namespaceName == "y") {
-                    while (true) {
-                        std::cout << "Input namespace name or type \"stop\" for cancel """ << std::endl;
-                        std::cin >> namespaceName;
-                        if (namespaceName == "stop") {
-                            break;
-                        }
-                        cSharpHierarchy.addClassToNamespace(className, namespaceName);
+                if (cSharpHierarchy.getNamespaces().size() > 1) {
+                    std::cout << "Would you like to add this class to namespace? y/n" << std::endl;
+                    std::string namespaceName;
+                    std::cin >> namespaceName;
+                    if (namespaceName == "y") {
+                        while (true) {
+                            std::cout << "Input namespace name or type \"stop\" for cancel """ << std::endl;
+                            std::cin >> namespaceName;
+                            if (namespaceName == "stop") {
+                                break;
+                            }
+                            cSharpHierarchy.addClassToNamespace(className, namespaceName);
                         }
                         break;
                     }
+                }
+
                 std::cout << "Class created!" << std::endl;
                 break;
             }
-            case 3: {
+            case 7: {
                 std::cout << cSharpHierarchy.classesToString() << std::endl;
                 break;
             }
-            case 4: {
+            case 8: {
                 std::cout << cSharpHierarchy.namespacesToString() << std::endl;
                 break;
             }
