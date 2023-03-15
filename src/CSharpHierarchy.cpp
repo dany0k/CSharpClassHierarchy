@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <exception>
 
 #include "CSharpHierarchy.h"
 #include "./models/CSharpClass.h"
@@ -87,6 +88,35 @@ void CSharpHierarchy::addParents(CSharpClass& currClass, std::string parentClass
     }
 }
 
+void CSharpHierarchy::deleteClassByName(std::string className) {
+    for (int i = 0; i < cSharpClasses.size(); i++) {
+        if (cSharpClasses.at(i).getClassName() == className) {
+            cSharpClasses.erase(cSharpClasses.begin() + i);
+            return;
+        }
+    }
+    throw std::exception();
+}
+void CSharpHierarchy::deleteNamespaceByName(std::string namespaceName) {
+    for (int i = 0; i < cSharpNamespaces.size(); i++) {
+        if (cSharpNamespaces.at(i).getName() == namespaceName) {
+            cSharpNamespaces.erase(cSharpNamespaces.begin() + i);
+            return;
+        }
+    }
+    throw std::exception();
+}
+
+void CSharpHierarchy::updateNamespaceByName(std::string namespaceName, std::string newNamespaceName) {
+    for (CSharpNamespace& nsp: cSharpNamespaces) {
+        if (nsp.getName() == namespaceName) {
+            nsp.setName(newNamespaceName);
+            return;
+        }
+    }
+    throw std::exception();
+}
+
 std::string CSharpHierarchy::namespacesToString() {
     std::string res;
     for (CSharpNamespace nsp : cSharpNamespaces) {
@@ -103,3 +133,26 @@ std::string CSharpHierarchy::classesToString() {
     return res;
 }
 
+void CSharpHierarchy::updateClassByName(std::string className, std::string newClassName,
+                                        std::vector<CSharpField> fields,
+                                        std::vector<CSharpMethod> methods,
+                                        CSharpClass parent) {
+    for (CSharpClass& cls: cSharpClasses) {
+        if (cls.getClassName() == className) {
+            if (!newClassName.empty()) {
+                cls.setClassName(newClassName);
+            }
+            if (!fields.empty()) {
+                cls.addFields(fields);
+            }
+            if (!methods.empty()) {
+                cls.addMethods(methods);
+            }
+            if (!parent.getClassName().empty()) {
+                cls.setParentClass(parent);
+            }
+        } else {
+            throw std::exception();
+        }
+    }
+}
