@@ -85,8 +85,20 @@ void CSharpClass::setFields(const std::vector<CSharpField> fields) {
     CSharpClass::fields = fields;
 }
 
+void CSharpClass::addFields(const std::vector<CSharpField>& newFields) {
+    for (const CSharpField& fld: newFields) {
+        fields.emplace_back(fld);
+    }
+}
+
 void CSharpClass::setMethods(const std::vector<CSharpMethod> methods) {
     CSharpClass::methods = methods;
+}
+
+void CSharpClass::addMethods(const std::vector<CSharpMethod>& newMethods) {
+    for (const CSharpMethod& mtd: newMethods) {
+        methods.emplace_back(mtd);
+    }
 }
 
 void CSharpClass::setType(TYPE type) {

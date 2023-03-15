@@ -44,21 +44,22 @@ public:
 
     void setClassName(std::string csharpClassName);
 
-    void setParentClasses(std::vector<CSharpClass> parentClasses);
-
     void setParentClass(CSharpClass& parentClass);
 
 
-    void setFields(std::vector<CSharpField> fields);
-
-    void setMethods(std::vector<CSharpMethod> methods);
-
-    void setType(TYPE type);
-
-    const std::vector<CSharpClass> &getParentClasses() const;
+    void addFields(const std::vector<CSharpField>& fields);
 
     std::string getClassName() const;
 
+    void setFields(const std::vector<CSharpField> fields);
+
+    void setMethods(const std::vector<CSharpMethod> methods);
+
+    void addMethods(const std::vector<CSharpMethod> &newMethods);
+
+    void setType(TYPE type);
+
+    void setParentClasses(const std::vector<CSharpClass> parentClasses);
 };
 
 
